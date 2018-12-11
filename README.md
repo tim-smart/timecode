@@ -1,4 +1,4 @@
-# @timsmart/timecode
+# @tim-smart/timecode
 
 A `Timecode` utility class for working with SMPTE timecode.
 
