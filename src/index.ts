@@ -23,7 +23,7 @@ function pad(input: number): string {
 }
 
 export class Timecode implements ITimecodeObject {
-  public static parseInput(input: TTimecodeInput): ITimecodeObject {
+  private static parseInput(input: TTimecodeInput): ITimecodeObject {
     if (typeof input === "string") {
       const parts = input.split(":");
       if (parts.length !== 4) {
@@ -41,7 +41,7 @@ export class Timecode implements ITimecodeObject {
     return input;
   }
 
-  public static objectToFrameCount(
+  private static objectToFrameCount(
     input: ITimecodeObject,
     framerate: number
   ): number {
