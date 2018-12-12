@@ -81,9 +81,13 @@ export class Timecode implements ITimecodeObject {
             this.options.framerate
           );
 
-    const newCount = subtract
+    let newCount = subtract
       ? this.frameCount() - frames
       : this.frameCount() + frames;
+
+    if (newCount < 0) {
+      newCount = 0;
+    }
 
     Object.assign(this, this.frameCountToObject(newCount));
   }
@@ -95,9 +99,6 @@ export class Timecode implements ITimecodeObject {
   public frameCount(): number {
     const count = Timecode.objectToFrameCount(this, this.options.framerate);
 
-    if (count < 0) {
-      return 0;
-    }
     return count;
   }
 
