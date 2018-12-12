@@ -110,8 +110,13 @@ export class Timecode implements ITimecodeObject {
   }
 
   public frameCount(): number {
-    const count = Timecode.objectToFrameCount(this, this.options.framerate);
-    return count - this.startOffsetFrameCount;
+    let count = Timecode.objectToFrameCount(this, this.options.framerate);
+    count -= this.startOffsetFrameCount;
+
+    if (count < 0) {
+      return 0;
+    }
+    return count;
   }
 
   public toMilliseconds(): number {
