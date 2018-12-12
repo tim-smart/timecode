@@ -72,7 +72,8 @@ export class Timecode implements ITimecodeObject {
     }
   }
 
-  public add(input: TTimecodeInput, subtract: boolean = false) {
+  // Adds the input to the current timecode and returns a new Timecode instance
+  public add(input: TTimecodeInput, subtract: boolean = false): Timecode {
     const frames =
       typeof input === "number"
         ? input
@@ -89,11 +90,11 @@ export class Timecode implements ITimecodeObject {
       newCount = 0;
     }
 
-    Object.assign(this, this.frameCountToObject(newCount));
+    return new Timecode(this.frameCountToObject(newCount), this.options);
   }
 
-  public subtract(input: TTimecodeInput) {
-    this.add(input, true);
+  public subtract(input: TTimecodeInput): Timecode {
+    return this.add(input, true);
   }
 
   public frameCount(): number {
@@ -121,7 +122,7 @@ export class Timecode implements ITimecodeObject {
 
     return {
       frames: count % fps,
-      hours: Math.floor(count / (fps * 3600)) % 24,
+      hours: Math.floor(count / (fps * 60 * 60)) % 24,
       minutes: Math.floor(count / (fps * 60)) % 60,
       seconds: Math.floor(count / fps) % 60
     };
