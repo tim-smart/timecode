@@ -11,7 +11,7 @@ export interface ITimecodeOptions {
   framerate?: number;
 
   // Ensures frame counts etc. are accurate
-  // Defaults to 01:00:00:00
+  // Defaults to 00:00:00:00
   startOffset?: TTimecodeInput;
 }
 
@@ -64,7 +64,7 @@ export class Timecode implements ITimecodeObject {
     framerate: 29.97,
     startOffset: {
       frames: 0,
-      hours: 1,
+      hours: 0,
       minutes: 0,
       seconds: 0
     }
@@ -97,8 +97,7 @@ export class Timecode implements ITimecodeObject {
             this.options.framerate
           );
 
-    let newCount = this.startOffsetFrameCount;
-    newCount += subtract
+    const newCount = subtract
       ? this.frameCount() - frames
       : this.frameCount() + frames;
 
