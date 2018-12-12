@@ -16,7 +16,6 @@ export interface ITimecodeObject {
 export declare type TTimecodeInput = string | ITimecodeObject;
 export interface ITimecodeOptions {
   framerate?: number;
-  startOffset?: TTimecodeInput;
 }
 export declare class Timecode implements ITimecodeObject {
   hours: number;
