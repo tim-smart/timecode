@@ -9,10 +9,6 @@ export type TTimecodeInput = string | ITimecodeObject;
 
 export interface ITimecodeOptions {
   framerate?: number;
-
-  // Ensures frame counts etc. are accurate
-  // Defaults to 00:00:00:00
-  startOffset?: TTimecodeInput;
 }
 
 function pad(input: number): string {
@@ -61,15 +57,8 @@ export class Timecode implements ITimecodeObject {
   public frames = 0;
 
   private options: Required<ITimecodeOptions> = {
-    framerate: 29.97,
-    startOffset: {
-      frames: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0
-    }
+    framerate: 29.97
   };
-  private startOffsetFrameCount: number;
 
   constructor(input: TTimecodeInput | number, opts?: ITimecodeOptions) {
     if (opts) {
@@ -81,11 +70,6 @@ export class Timecode implements ITimecodeObject {
     } else {
       Object.assign(this, Timecode.parseInput(input));
     }
-
-    this.startOffsetFrameCount = Timecode.objectToFrameCount(
-      Timecode.parseInput(this.options.startOffset),
-      this.options.framerate
-    );
   }
 
   public add(input: TTimecodeInput, subtract: boolean = false) {
@@ -109,8 +93,7 @@ export class Timecode implements ITimecodeObject {
   }
 
   public frameCount(): number {
-    let count = Timecode.objectToFrameCount(this, this.options.framerate);
-    count -= this.startOffsetFrameCount;
+    const count = Timecode.objectToFrameCount(this, this.options.framerate);
 
     if (count < 0) {
       return 0;
