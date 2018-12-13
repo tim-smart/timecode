@@ -34,7 +34,12 @@ export class Timecode implements ITimecodeObject {
       };
     }
 
-    return input;
+    return {
+      frames: input.frames,
+      hours: input.hours,
+      minutes: input.minutes,
+      seconds: input.seconds
+    };
   }
 
   private static objectToFrameCount(
