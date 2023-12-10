@@ -53,7 +53,7 @@ export class Timecode implements ITimecodeObject {
     count += input.seconds * framerate;
     count += input.frames;
 
-    return count;
+    return Math.round(count);
   }
 
   public hours = 0;
@@ -126,7 +126,7 @@ export class Timecode implements ITimecodeObject {
     const fps = this.options.framerate;
 
     return {
-      frames: count % fps,
+      frames: Math.round(count % fps),
       hours: Math.floor(count / (fps * 60 * 60)) % 24,
       minutes: Math.floor(count / (fps * 60)) % 60,
       seconds: Math.floor(count / fps) % 60
